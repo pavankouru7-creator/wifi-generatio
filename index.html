@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wi-Fi Generation Comparison Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Wi-Fi Generation Comparison Tool</h1>
+  <p>Describe what you need in plain English. The tool works out the bandwidth required and checks every Wi-Fi generation against it.</p>
+</header>
+
+<nav role="tablist">
+  <button role="tab" aria-selected="true" data-tab="analyze">Analyzer</button>
+  <button role="tab" aria-selected="false" data-tab="gens">Generations</button>
+  <button role="tab" aria-selected="false" data-tab="about">How it works</button>
+</nav>
+
+<section id="analyze">
+  <div class="ask">
+    <input id="need" type="text" aria-label="Describe your Wi-Fi need" placeholder="I need a wifi for gaming and that is for 20 devices" value="I need a wifi for gaming and that is for 20 devices">
+    <button class="go" id="go">Compare</button>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div id="result"></div>
+</section>
+
+<section id="gens" class="hide">
+  <div class="panel scroll"><table id="gtable"></table>
+  <p class="note">Max speed is the theoretical link rate from the standard. Real-world throughput is a typical usable figure for one router.</p></div>
+</section>
+
+<section id="about" class="hide">
+  <div class="panel">
+    <h3>How the estimate is made</h3>
+    <ul>
+      <li><b>Reading your sentence:</b> the tool looks for the number of devices and for activity keywords such as gaming, streaming, calls, downloads.</li>
+      <li><b>Speed per device:</b> each activity has a typical bandwidth. With several activities, the heaviest counts fully and the others add 30%.</li>
+      <li><b>Total required:</b> <code>devices × speed per device × 1.25</code>. The 25% is headroom for overhead and interference.</li>
+      <li><b>Usable capacity:</b> <code>real throughput ÷ (1 + k × (devices − 1))</code>. The factor k models contention; newer generations have a smaller k because of MU-MIMO and OFDMA.</li>
+      <li><b>Verdict:</b> usable speed per device compared with the requirement, plus a latency check for gaming and VR.</li>
+    </ul>
+    <p class="note">This is an educational estimation model. All devices are assumed to be active at the same time, which is the worst case. Actual results depend on router hardware, walls, distance and channel width.</p>
+  </div>
+</section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
